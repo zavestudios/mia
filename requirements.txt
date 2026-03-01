@@ -1,0 +1,8 @@
+# Mia - OpenClaw AI Assistant
+# Python dependencies
+
+# Core dependencies (to be added as needed)
+# Example:
+# anthropic>=0.18.0
+# fastapi>=0.110.0
+# uvicorn[standard]>=0.27.0

@@ -1,0 +1,23 @@
+name: Build and Push Container
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+permissions:
+  contents: read
+  packages: write
+  id-token: write
+
+jobs:
+  build:
+    uses: zavestudios/platform-pipelines/.github/workflows/container-build.yml@main
+    with:
+      image_name: zavestudios/mia
+      dockerfile: Dockerfile
+      platforms: linux/amd64,linux/arm64
+      push: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+    secrets:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,0 +1,22 @@
+apiVersion: zave.io/v1
+kind: Workload
+metadata:
+  name: mia
+
+spec:
+  runtime: container
+  exposure: public-http
+  delivery: rolling
+
+  build:
+    mode: dockerfile
+
+  persistence:
+    engine: postgres
+
+  capabilities:
+    - name: metrics
+    - name: tracing
+
+  resources:
+    tier: standard
