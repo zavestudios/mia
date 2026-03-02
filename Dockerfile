@@ -1,7 +1,7 @@
 # Mia - OpenClaw AI Assistant
 # Multi-stage build for minimal production image
 
-FROM python:3.12-slim as builder
+FROM python:3.12-slim AS builder
 
 WORKDIR /app
 
@@ -13,7 +13,7 @@ RUN apt-get update && \
 
 # Copy requirements and install dependencies
 COPY requirements.txt .
-RUN pip install --no-cache-dir --user -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Production stage
 FROM python:3.12-slim
@@ -21,13 +21,13 @@ FROM python:3.12-slim
 WORKDIR /app
 
 # Copy dependencies from builder
-COPY --from=builder /root/.local /root/.local
+COPY --from=builder /usr/local /usr/local
 
 # Copy application code
 COPY . .
 
-# Make sure scripts in .local are usable
-ENV PATH=/root/.local/bin:$PATH
+# Make sure pip-installed scripts are usable
+ENV PATH=/usr/local/bin:$PATH
 
 # Run as non-root user
 RUN useradd -m -u 1000 mia && \
