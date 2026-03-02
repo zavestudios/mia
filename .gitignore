@@ -53,3 +53,4 @@ docker-compose.override.yml
 # Agent configurations (local development only, not required in tenant repos)
 AGENTS.md
 CLAUDE.md
+strict-audit
