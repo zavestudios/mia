@@ -13,7 +13,8 @@ permissions:
 
 jobs:
   build:
-    uses: zavestudios/platform-pipelines/.github/workflows/container-build.yml@main
+    name: Build Container Image
+    uses: zavestudios/platform-pipelines/.github/workflows/container-build.yml@660aed58a3bf8413f23df0da545650de9b11b7fc
     with:
       image_name: zavestudios/mia
       dockerfile: Dockerfile
