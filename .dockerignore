@@ -1,0 +1,14 @@
+.git
+.github
+*.md
+docker-compose.yml
+.env
+.env.*
+node_modules
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.Python
+.venv
+venv/

@@ -1,42 +1,24 @@
-# Mia - OpenClaw AI Assistant
-# Multi-stage build for minimal production image
-
-FROM python:3.12-slim AS builder
-
-WORKDIR /app
-
-# Install build dependencies
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
-    gcc \
-    && rm -rf /var/lib/apt/lists/*
-
-# Copy requirements and install dependencies
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
-
-# Production stage
-FROM python:3.12-slim
+# Mia - Containerized OpenClaw AI Gateway
+# Node.js 22+ base image
+FROM node:22-slim
 
 WORKDIR /app
 
-# Copy dependencies from builder
-COPY --from=builder /usr/local /usr/local
+# Install OpenClaw globally
+RUN npm install -g openclaw@latest
 
-# Copy application code
-COPY . .
+# Create OpenClaw config directory
+RUN mkdir -p /root/.openclaw
 
-# Make sure pip-installed scripts are usable
-ENV PATH=/usr/local/bin:$PATH
+# Copy configuration file (if exists)
+COPY config/openclaw.json /root/.openclaw/openclaw.json 2>/dev/null || true
 
-# Run as non-root user
-RUN useradd -m -u 1000 mia && \
-    chown -R mia:mia /app
-USER mia
+# Expose OpenClaw gateway port
+EXPOSE 18789
 
-# Health check
-HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-    CMD python -c "import sys; sys.exit(0)"
+# Health check for OpenClaw gateway
+HEALTHCHECK --interval=30s --timeout=3s --start-period=10s --retries=3 \
+    CMD node -e "require('http').get('http://localhost:18789/health', (r) => process.exit(r.statusCode === 200 ? 0 : 1)).on('error', () => process.exit(1))"
 
-# Default command (override in deployment)
-CMD ["python", "main.py"]
+# Run OpenClaw gateway
+CMD ["openclaw", "gateway", "--port", "18789"]

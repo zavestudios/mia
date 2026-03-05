@@ -1,0 +1,17 @@
+{
+  "gateway": {
+    "port": 18789,
+    "host": "0.0.0.0"
+  },
+  "channels": {
+    "whatsapp": {
+      "enabled": false
+    },
+    "telegram": {
+      "enabled": false
+    },
+    "discord": {
+      "enabled": false
+    }
+  }
+}
