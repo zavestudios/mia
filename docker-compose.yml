@@ -1,13 +1,15 @@
 services:
   mia:
     build: .
+    env_file:
+      - .env
     ports:
-      - "18789:18789"
+      - "${OPENCLAW_PORT:-18789}:18789"
     volumes:
-      - ./config:/root/.openclaw
-      - openclaw_data:/root/.openclaw/data
+      - ./config:/home/node/.openclaw
+      - openclaw_data:/home/node/.openclaw/data
     environment:
-      - NODE_ENV=development
+      - NODE_ENV=${NODE_ENV:-development}
 
 volumes:
   openclaw_data:
