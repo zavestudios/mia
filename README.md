@@ -22,7 +22,7 @@ See `zave.yaml` for the canonical workload contract.
 
 Canonical platform documentation:
 - [platform-docs](https://github.com/zavestudios/platform-docs)
-- [PLATFORM_OPERATING_MODEL.md](https://github.com/zavestudios/platform-docs/blob/main/_platform/PLATFORM_OPERATING_MODEL.md)
+- [OPERATING_MODEL.md](https://github.com/zavestudios/platform-docs/blob/main/_platform/OPERATING_MODEL.md)
 - [CONTRACT_SCHEMA.md](https://github.com/zavestudios/platform-docs/blob/main/_platform/CONTRACT_SCHEMA.md)
 
 ## Architecture
@@ -43,16 +43,21 @@ Details to be added as the application is developed.
    cd mia
    ```
 
-2. Start OpenClaw gateway:
+2. Copy environment template:
+   ```bash
+   cp .env.example .env
+   ```
+
+3. Start OpenClaw gateway:
    ```bash
    docker-compose up
    ```
 
-3. Access OpenClaw:
+4. Access OpenClaw:
    - **Web UI**: http://localhost:18789
    - **Gateway**: Running in container
 
-4. Configure channels (optional):
+5. Configure channels (optional):
    - Edit `config/openclaw.json` to enable WhatsApp, Telegram, etc.
    - Restart container to apply changes
 
@@ -88,3 +93,39 @@ docker-compose exec mia openclaw --help
 Deployment is automated via GitOps following the platform lifecycle model.
 
 See [LIFECYCLE_MODEL.md](https://github.com/zavestudios/platform-docs/blob/main/_platform/LIFECYCLE_MODEL.md) for details.
+
+### First-Time Sandbox Deploy Checklist
+
+`mia` is a cross-repo deploy: `mia` (tenant workload/image) + `gitops` (runtime desired state).
+
+1. Build and publish initial image from `mia`:
+   - Merge `mia` changes to `main`.
+   - Wait for `.github/workflows/build.yml` to complete successfully.
+   - Record the pushed image digest from workflow logs (`ghcr.io/zavestudios/mia@sha256:...`).
+
+2. Register image digest in `gitops`:
+   - Update `gitops/tenants/mia/deployment.yaml` image to the new digest.
+   - Ensure `gitops/clusters/sandbox/kustomization.yaml` includes `../../tenants`.
+   - Ensure `gitops/tenants/kustomization.yaml` exists and includes `mia`.
+   - Open and merge a `gitops` PR.
+
+3. Apply/verify GitOps state:
+   - If Flux/entrypoint is not yet active, apply it manually.
+   - **Run manually by human**:
+     ```bash
+     kubectl kustomize clusters/sandbox
+     kubectl apply -k clusters/sandbox
+     ```
+
+4. Validate runtime health:
+   - **Run manually by human**:
+     ```bash
+     kubectl -n mia get pods,svc,ingress
+     kubectl -n mia describe deploy mia
+     ```
+   - Confirm ingress host `mia-sandbox.zavestudios.com` routes to service `mia`.
+
+5. Prerequisites to verify once:
+   - Namespace `mia` has pull secret `ghcr-secret` for `ghcr.io/zavestudios/mia`.
+   - DNS for `mia-sandbox.zavestudios.com` points to sandbox ingress.
+   - TLS issuance is available for `mia-tls` via cert-manager.
