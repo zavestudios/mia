@@ -1,0 +1,16 @@
+name: Security Scan
+
+on:
+  pull_request:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 9 * * 1" # Mondays 9:00 UTC
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  security:
+    name: Security Scan
+    uses: zavestudios/platform-pipelines/.github/workflows/security-scan.yml@660aed58a3bf8413f23df0da545650de9b11b7fc
