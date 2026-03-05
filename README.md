@@ -94,6 +94,12 @@ Deployment is automated via GitOps following the platform lifecycle model.
 
 See [LIFECYCLE_MODEL.md](https://github.com/zavestudios/platform-docs/blob/main/_platform/LIFECYCLE_MODEL.md) for details.
 
+### Current Status
+
+- CI/CD pipeline wiring is complete for this repository.
+- GitOps desired-state wiring for `mia` is merged in the `gitops` repository.
+- First sandbox runtime verification is intentionally deferred and can be completed later via cluster-state review.
+
 ### First-Time Sandbox Deploy Checklist
 
 `mia` is a cross-repo deploy: `mia` (tenant workload/image) + `gitops` (runtime desired state).
