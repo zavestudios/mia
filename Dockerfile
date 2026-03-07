@@ -1,10 +1,7 @@
 # Mia - OpenClaw AI Gateway
 # Use the official OpenClaw runtime image and layer workload defaults.
 FROM ghcr.io/openclaw/openclaw:latest
-
 ENV HOME=/home/node
-
-WORKDIR /home/node
 
 USER root
 RUN mkdir -p /home/node/.openclaw \
