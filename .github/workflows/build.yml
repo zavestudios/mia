@@ -12,14 +12,69 @@ permissions:
   packages: write
   id-token: write
 
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: zavestudios/mia
+
 jobs:
   build:
     name: Build Container Image
-    uses: zavestudios/platform-pipelines/.github/workflows/container-build.yml@660aed58a3bf8413f23df0da545650de9b11b7fc
-    with:
-      image_name: zavestudios/mia
-      dockerfile: Dockerfile
-      platforms: linux/amd64,linux/arm64
-      push: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
-    secrets:
-      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        with:
+          persist-credentials: false
+
+      - name: Set up QEMU (multi-arch)
+        uses: docker/setup-qemu-action@c7c53464625b32c7a7e944ae62b3e17d2b600130 # v3
+
+      - name: Set up Buildx
+        uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f # v3
+
+      - name: Log in to GHCR
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+        uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9 # v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Compute image tag
+        id: meta
+        shell: bash
+        run: |
+          set -euo pipefail
+          SHORT_SHA="${GITHUB_SHA::7}"
+          TAG="sha-${SHORT_SHA}"
+          echo "tag=${TAG}" >> "$GITHUB_OUTPUT"
+          echo "image=${REGISTRY}/${IMAGE_NAME}" >> "$GITHUB_OUTPUT"
+
+      - name: Build and optionally push
+        id: build
+        uses: docker/build-push-action@10e90e3645eae34f1e60eeb005ba3a3d33f178e8 # v6
+        with:
+          context: .
+          file: Dockerfile
+          push: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+          platforms: linux/amd64,linux/arm64
+          tags: |
+            ${{ steps.meta.outputs.image }}:${{ steps.meta.outputs.tag }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          provenance: true
+          sbom: true
+
+      - name: Install Cosign
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+        uses: sigstore/cosign-installer@4959ce089c160fddf62f7b42464195ba1a56d382 # v3.6.0
+
+      - name: Cosign sign (keyless, GitHub OIDC)
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+        env:
+          COSIGN_EXPERIMENTAL: "true"
+          IMAGE_REF: ${{ steps.meta.outputs.image }}:${{ steps.meta.outputs.tag }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          cosign sign --yes "${IMAGE_REF}"
