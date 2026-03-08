@@ -10,6 +10,16 @@ Purpose: provide one repeatable operator check after deploys.
 
 ## Procedure
 
+0. Optional one-command runner.
+
+**Run manually by human:**
+
+```bash
+./scripts/smoke-sandbox.sh
+```
+
+This executes the baseline checks below against namespace `mia` and deployment `mia`.
+
 1. Verify pod baseline.
 
 **Run manually by human:**
