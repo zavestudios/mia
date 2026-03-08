@@ -4,6 +4,8 @@ This runbook provides a reproducible first end-to-end interaction path for `mia`
 
 It intentionally avoids external chat channel setup for day-1 validation.
 
+For routine post-deploy verification, use [interaction-smoke-test.md](interaction-smoke-test.md).
+
 ## Scope
 
 - Validate that gateway runtime is reachable.
