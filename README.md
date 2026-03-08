@@ -94,6 +94,10 @@ Deployment is automated via GitOps following the platform lifecycle model.
 
 See [LIFECYCLE_MODEL.md](https://github.com/zavestudios/platform-docs/blob/main/_platform/LIFECYCLE_MODEL.md) for details.
 
+## First Interaction
+
+Use the day-1 operator runbook at [docs/first-interaction.md](docs/first-interaction.md) to execute the first end-to-end interaction path in sandbox.
+
 ### Current Status
 
 - CI/CD pipeline wiring is complete for this repository.
