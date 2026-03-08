@@ -75,3 +75,18 @@ Expected:
 - Gateway health/status commands succeed.
 - Local agent turn returns a response payload.
 - Runtime logs show stable process (no repeated crash/restart errors).
+
+
+## Day-1 Operator Validation (Observed Baseline)
+
+Observed-good signals from sandbox validation:
+
+- `openclaw gateway health --json` returns `"ok": true`.
+- `openclaw status --json` returns session/agent status payload.
+- `openclaw dashboard --no-open` prints a tokenized dashboard URL.
+
+Important operator notes:
+
+- `gateway.url` may still show loopback (`ws://127.0.0.1:18789`) in status output.
+- Channel allowlist warnings are expected until channel sender policies are configured.
+- Current setup is validated for operator interaction path, not external channel production hardening.
