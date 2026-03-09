@@ -87,4 +87,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          cosign verify --certificate-oidc-issuer=https://token.actions.githubusercontent.com "${IMAGE_REF}"
+          cosign verify \
+            --certificate-oidc-issuer=https://token.actions.githubusercontent.com \
+            --certificate-identity-regexp='^https://github.com/zavestudios/mia/.github/workflows/build.yml@refs/heads/main$' \
+            "${IMAGE_REF}"
