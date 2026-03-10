@@ -99,6 +99,7 @@ For tenant-scoped Ollama heartbeat architecture and rollout steps, see [`gitops/
 
 Use the day-1 operator runbook at [docs/first-interaction.md](docs/first-interaction.md) to execute the first end-to-end interaction path in sandbox.
 Use the repeatable post-deploy check at [docs/interaction-smoke-test.md](docs/interaction-smoke-test.md).
+Use [docs/token-optimization-notes.md](docs/token-optimization-notes.md) for practical cost-control guidance.
 For a one-command operator check, run `./scripts/smoke-sandbox.sh`.
 
 ### Current Status
