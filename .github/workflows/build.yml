@@ -94,7 +94,7 @@ jobs:
 
       - name: Dispatch digest promotion to gitops
         if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
-        uses: peter-evans/repository-dispatch@988cbfdd0f1b40f3022a0253d5b714f8f10f2737 # v3
+        uses: peter-evans/repository-dispatch@ff45666b9427631e3450c54a1bcbee4d9ff4d7c0 # v3
         with:
           token: ${{ secrets.GITOPS_REPO_DISPATCH_TOKEN }}
           repository: zavestudios/gitops
