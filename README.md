@@ -93,6 +93,7 @@ docker-compose exec mia openclaw --help
 Deployment is automated via GitOps following the platform lifecycle model.
 
 See [LIFECYCLE_MODEL.md](https://github.com/zavestudios/platform-docs/blob/main/_platform/LIFECYCLE_MODEL.md) for details.
+For tenant-scoped Ollama heartbeat architecture and rollout steps, see [`gitops/docs/mia-ollama-heartbeat.md`](https://github.com/zavestudios/gitops/blob/main/docs/mia-ollama-heartbeat.md).
 
 ## First Interaction
 
