@@ -91,3 +91,18 @@ jobs:
             --certificate-oidc-issuer=https://token.actions.githubusercontent.com \
             --certificate-identity-regexp='^https://github.com/zavestudios/mia/.github/workflows/build.yml@refs/heads/main$' \
             "${IMAGE_REF}"
+
+      - name: Dispatch digest promotion to gitops
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+        uses: peter-evans/repository-dispatch@988cbfdd0f1b40f3022a0253d5b714f8f10f2737 # v3
+        with:
+          token: ${{ secrets.GITOPS_REPO_DISPATCH_TOKEN }}
+          repository: zavestudios/gitops
+          event-type: mia-image-published
+          client-payload: >-
+            {
+              "digest": "${{ steps.build.outputs.digest }}",
+              "tag": "${{ steps.meta.outputs.tag }}",
+              "source_repo": "${{ github.repository }}",
+              "source_sha": "${{ github.sha }}"
+            }
