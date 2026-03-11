@@ -32,6 +32,9 @@
       }
     }
   },
+  "session": {
+    "dmScope": "per-channel-peer"
+  },
   "channels": {
     "whatsapp": {
       "enabled": true,
@@ -48,7 +51,15 @@
     },
     "telegram": {
       "enabled": false,
-      "groupPolicy": "allowlist"
+      "allowFrom": [
+        "+19516223349",
+        "+19099174973"
+      ],
+      "groupPolicy": "allowlist",
+      "groupAllowFrom": [
+        "+19516223349",
+        "+19099174973"
+      ]
     },
     "discord": {
       "enabled": false
