@@ -50,16 +50,7 @@
       ]
     },
     "telegram": {
-      "enabled": false,
-      "allowFrom": [
-        "+1234567892",
-        "+1234567891"
-      ],
-      "groupPolicy": "allowlist",
-      "groupAllowFrom": [
-        "+1234567892",
-        "+1234567891"
-      ]
+      "enabled": false
     },
     "discord": {
       "enabled": false
