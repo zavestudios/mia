@@ -36,9 +36,15 @@
     "whatsapp": {
       "enabled": true,
       "dmPolicy": "pairing",
-      "allowFrom": ["+1234567892"],
+      "allowFrom": [
+        "+1234567892",
+        "+1234567891"
+      ],
       "groupPolicy": "allowlist",
-      "groupAllowFrom": ["+1234567892"]
+      "groupAllowFrom": [
+        "+1234567892",
+        "+1234567891"
+      ]
     },
     "telegram": {
       "enabled": false,
