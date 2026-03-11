@@ -40,13 +40,11 @@
       "enabled": true,
       "dmPolicy": "pairing",
       "allowFrom": [
-        "+1234567892",
         "+1234567890",
         "+1234567891"
       ],
       "groupPolicy": "allowlist",
       "groupAllowFrom": [
-        "+1234567892",
         "+1234567890",
         "+1234567891"
       ]
