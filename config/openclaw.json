@@ -34,12 +34,13 @@
   },
   "channels": {
     "whatsapp": {
-      "enabled": false,
-      "groupPolicy": "open"
+      "enabled": true,
+      "dmPolicy": "pairing",
+      "groupPolicy": "allowlist"
     },
     "telegram": {
       "enabled": false,
-      "groupPolicy": "open"
+      "groupPolicy": "allowlist"
     },
     "discord": {
       "enabled": false
