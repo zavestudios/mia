@@ -50,16 +50,7 @@
       ]
     },
     "telegram": {
-      "enabled": false,
-      "allowFrom": [
-        "+19516223349",
-        "+19099174973"
-      ],
-      "groupPolicy": "allowlist",
-      "groupAllowFrom": [
-        "+19516223349",
-        "+19099174973"
-      ]
+      "enabled": false
     },
     "discord": {
       "enabled": false
