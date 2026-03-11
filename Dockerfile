@@ -1,6 +1,6 @@
 # Mia - OpenClaw AI Gateway
 # Use the official OpenClaw runtime image and layer workload defaults.
-FROM ghcr.io/openclaw/openclaw:v2026.3.8@sha256:7b1294f6aa2eb05b2070cc614743f79212313fc294e5de221ada8a2969ea52f6
+FROM ghcr.io/openclaw/openclaw:v2026.3.7@sha256:70c5677580a958f704eb27297a62661b501534c3b2b9dec7a61e5ed5aa0c24cf
 ENV HOME=/home/node
 
 USER root
