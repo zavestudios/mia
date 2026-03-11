@@ -36,9 +36,15 @@
     "whatsapp": {
       "enabled": true,
       "dmPolicy": "pairing",
-      "allowFrom": ["+19516223349"],
+      "allowFrom": [
+        "+19516223349",
+        "+19099174973"
+      ],
       "groupPolicy": "allowlist",
-      "groupAllowFrom": ["+19516223349"]
+      "groupAllowFrom": [
+        "+19516223349",
+        "+19099174973"
+      ]
     },
     "telegram": {
       "enabled": false,
