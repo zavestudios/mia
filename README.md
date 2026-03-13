@@ -93,6 +93,14 @@ docker-compose exec mia openclaw --help
 Deployment is automated via GitOps following the platform lifecycle model.
 
 See [LIFECYCLE_MODEL.md](https://github.com/zavestudios/platform-docs/blob/main/_platform/LIFECYCLE_MODEL.md) for details.
+For tenant-scoped Ollama heartbeat architecture and rollout steps, see [`gitops/docs/mia-ollama-heartbeat.md`](https://github.com/zavestudios/gitops/blob/main/docs/mia-ollama-heartbeat.md).
+
+## First Interaction
+
+Use the day-1 operator runbook at [docs/first-interaction.md](docs/first-interaction.md) to execute the first end-to-end interaction path in sandbox.
+Use the repeatable post-deploy check at [docs/interaction-smoke-test.md](docs/interaction-smoke-test.md).
+Use [docs/token-optimization-notes.md](docs/token-optimization-notes.md) for practical cost-control guidance.
+For a one-command operator check, run `./scripts/smoke-sandbox.sh`.
 
 ### Current Status
 

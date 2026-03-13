@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5
         with:
           persist-credentials: false
 
@@ -73,8 +73,36 @@ jobs:
         if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
         env:
           COSIGN_EXPERIMENTAL: "true"
-          IMAGE_REF: ${{ steps.meta.outputs.image }}:${{ steps.meta.outputs.tag }}
+          IMAGE_REF: ${{ steps.meta.outputs.image }}@${{ steps.build.outputs.digest }}
         shell: bash
         run: |
           set -euo pipefail
           cosign sign --yes "${IMAGE_REF}"
+
+      - name: Cosign verify (keyless sanity check)
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+        env:
+          COSIGN_EXPERIMENTAL: "true"
+          IMAGE_REF: ${{ steps.meta.outputs.image }}@${{ steps.build.outputs.digest }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          cosign verify \
+            --certificate-oidc-issuer=https://token.actions.githubusercontent.com \
+            --certificate-identity-regexp='^https://github.com/zavestudios/mia/.github/workflows/build.yml@refs/heads/main$' \
+            "${IMAGE_REF}"
+
+      - name: Dispatch digest promotion to gitops
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+        uses: peter-evans/repository-dispatch@ff45666b9427631e3450c54a1bcbee4d9ff4d7c0 # v3
+        with:
+          token: ${{ secrets.GITOPS_REPO_DISPATCH_TOKEN }}
+          repository: zavestudios/gitops
+          event-type: mia-image-published
+          client-payload: >-
+            {
+              "digest": "${{ steps.build.outputs.digest }}",
+              "tag": "${{ steps.meta.outputs.tag }}",
+              "source_repo": "${{ github.repository }}",
+              "source_sha": "${{ github.sha }}"
+            }
