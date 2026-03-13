@@ -1,10 +1,53 @@
 {
   "gateway": {
-    "port": 18789
+    "port": 18789,
+    "bind": "lan",
+    "auth": {
+      "rateLimit": {
+        "maxAttempts": 10,
+        "windowMs": 60000,
+        "lockoutMs": 300000
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "anthropic/claude-haiku-4-5"
+      },
+      "models": {
+        "anthropic/claude-sonnet-4-5": {
+          "alias": "sonnet"
+        },
+        "anthropic/claude-haiku-4-5": {
+          "alias": "haiku"
+        }
+      },
+      "heartbeat": {
+        "every": "1h",
+        "model": "ollama/llama3.2:3b",
+        "session": "main",
+        "target": "none",
+        "prompt": "Check: any blockers, opportunities, or progress updates needed?"
+      }
+    }
+  },
+  "session": {
+    "dmScope": "per-channel-peer"
   },
   "channels": {
     "whatsapp": {
-      "enabled": false
+      "enabled": true,
+      "dmPolicy": "pairing",
+      "allowFrom": [
+        "+19099174972",
+        "+19099174973"
+      ],
+      "groupPolicy": "allowlist",
+      "groupAllowFrom": [
+        "+19099174972",
+        "+19099174973"
+      ]
     },
     "telegram": {
       "enabled": false
