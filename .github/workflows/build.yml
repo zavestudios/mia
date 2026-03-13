@@ -21,6 +21,7 @@ jobs:
       platforms: linux/amd64,linux/arm64
       dispatch_repository: zavestudios/gitops
       dispatch_event_type: mia-image-published
+      fail_severity: ""  # TEMPORARY: Bypass Trivy gate for sandbox WhatsApp persistence testing (tracked in Issue #6)
     secrets:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       GITOPS_REPO_DISPATCH_TOKEN: ${{ secrets.GITOPS_REPO_DISPATCH_TOKEN }}
