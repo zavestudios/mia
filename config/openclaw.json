@@ -37,7 +37,7 @@
   },
   "channels": {
     "whatsapp": {
-      "enabled": true,
+      "enabled": false,
       "dmPolicy": "pairing",
       "allowFrom": [
         "+1234567890",
@@ -48,12 +48,6 @@
         "+1234567890",
         "+1234567891"
       ]
-    },
-    "telegram": {
-      "enabled": false
-    },
-    "discord": {
-      "enabled": false
     }
   }
 }
