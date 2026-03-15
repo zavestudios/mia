@@ -95,6 +95,15 @@ Deployment is automated via GitOps following the platform lifecycle model.
 See [LIFECYCLE_MODEL.md](https://github.com/zavestudios/platform-docs/blob/main/_platform/LIFECYCLE_MODEL.md) for details.
 For tenant-scoped Ollama heartbeat architecture and rollout steps, see [`gitops/docs/mia-ollama-heartbeat.md`](https://github.com/zavestudios/gitops/blob/main/docs/mia-ollama-heartbeat.md).
 
+### Required GitHub Secrets
+
+The following repository secrets must be configured for CI/CD builds:
+
+- `WHATSAPP_ALLOW_FROM`: JSON array of allowed phone numbers for WhatsApp DM, e.g., `["+1234567890","+1234567891"]`
+- `WHATSAPP_GROUP_ALLOW_FROM`: JSON array of allowed phone numbers for WhatsApp groups, e.g., `["+1234567890","+1234567891"]`
+
+These secrets are injected as Docker build arguments during the image build process and substituted into `config/openclaw.json`.
+
 ## First Interaction
 
 Use the day-1 operator runbook at [docs/first-interaction.md](docs/first-interaction.md) to execute the first end-to-end interaction path in sandbox.

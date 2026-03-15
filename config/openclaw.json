@@ -33,21 +33,15 @@
     }
   },
   "session": {
-    "dmScope": "per-channel-peer"
+    "dmScope": "per-channel"
   },
   "channels": {
     "whatsapp": {
       "enabled": false,
       "dmPolicy": "pairing",
-      "allowFrom": [
-        "+1234567890",
-        "+1234567891"
-      ],
+      "allowFrom": "{{WHATSAPP_ALLOW_FROM}}",
       "groupPolicy": "allowlist",
-      "groupAllowFrom": [
-        "+1234567890",
-        "+1234567891"
-      ]
+      "groupAllowFrom": "{{WHATSAPP_GROUP_ALLOW_FROM}}"
     }
   }
 }
