@@ -29,6 +29,9 @@ Canonical platform documentation:
 
 Details to be added as the application is developed.
 
+Current assistant feature design:
+- [Mia Platform Assistant v1](docs/platform-assistant-v1.md)
+
 ## Local Development
 
 ### Prerequisites
