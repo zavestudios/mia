@@ -37,7 +37,7 @@
   },
   "channels": {
     "whatsapp": {
-      "enabled": false,
+      "enabled": true,
       "dmPolicy": "pairing",
       "allowFrom": "{{WHATSAPP_ALLOW_FROM}}",
       "groupPolicy": "allowlist",
