@@ -33,7 +33,7 @@
     }
   },
   "session": {
-    "dmScope": "per-channel"
+    "dmScope": "per-channel-peer"
   },
   "channels": {
     "whatsapp": {
