@@ -1,8 +1,22 @@
-# Mia — OpenClaw AI Gateway
+# Mia — Platform and Career Assistant
 
 **Repository Category:** `tenant` (see [REPO_TAXONOMY](https://github.com/zavestudios/platform-docs/blob/main/_platform/REPO_TAXONOMY.md))
 
-Containerized deployment of [OpenClaw](https://docs.openclaw.ai/) - a self-hosted gateway connecting chat apps (WhatsApp, Telegram, Discord, iMessage) to AI coding agents.
+Containerized deployment of [OpenClaw](https://docs.openclaw.ai/) used as a self-hosted platform and career assistant. Mia connects chat surfaces to an assistant workflow focused on planning, reminders, tracking, and platform-aware execution support.
+
+## What Mia Is
+
+Mia is a governed `tenant` workload that uses OpenClaw as the runtime surface.
+
+Current intended use:
+- maintain a career and learning roadmap
+- track weekly priorities, completed work, and blockers
+- help connect real repository work to broader platform goals
+- provide reminder and review prompts through OpenClaw heartbeat
+- draft summaries and next actions without becoming a new source of governance truth
+- prepare for a future retrospective learning loop that turns sessions into refinement proposals
+
+Mia is not yet a general autonomous agent platform. Current v1 behavior remains intentionally bounded and human-guided.
 
 ## What is OpenClaw?
 
@@ -30,7 +44,10 @@ Canonical platform documentation:
 Details to be added as the application is developed.
 
 Current assistant feature design:
-- [Mia Platform Assistant v1](docs/platform-assistant-v1.md)
+- [Mia Platform and Career Assistant v1](docs/platform-assistant-v1.md)
+- [Learning Roadmap v1](docs/learning-roadmap-v1.md)
+- [Learning Progress Tracker](docs/learning-progress-tracker.md)
+- [Weekly Review Template](docs/weekly-review-template.md)
 
 ## Local Development
 
@@ -113,6 +130,26 @@ Use the day-1 operator runbook at [docs/first-interaction.md](docs/first-interac
 Use the repeatable post-deploy check at [docs/interaction-smoke-test.md](docs/interaction-smoke-test.md).
 Use [docs/token-optimization-notes.md](docs/token-optimization-notes.md) for practical cost-control guidance.
 For a one-command operator check, run `./scripts/smoke-sandbox.sh`.
+
+## Career and Learning Workflow
+
+The current productive path for Mia is conversational and heartbeat-assisted, not fully autonomous.
+
+Use these artifacts as the working system of record:
+- roadmap: [docs/learning-roadmap-v1.md](docs/learning-roadmap-v1.md)
+- progress tracker: [docs/learning-progress-tracker.md](docs/learning-progress-tracker.md)
+- weekly review: [docs/weekly-review-template.md](docs/weekly-review-template.md)
+
+Recommended operating loop:
+1. Update the roadmap when priorities or learning goals change.
+2. Log completed work, blockers, and next actions in the tracker.
+3. Use Mia for weekly review, course correction, and reminder prompts.
+4. Use repository and issue activity as supporting evidence, not as the only progress signal.
+
+Planned next layer:
+- a retrospective learning loop aligned with `platform-docs#71`
+- session-derived proposals for memory updates, issues, and follow-up work
+- explicit queueing for higher-risk changes instead of unattended mutation
 
 ### Current Status
 
