@@ -20,5 +20,10 @@ RUN sed -e "s|\"{{WHATSAPP_ALLOW_FROM}}\"|${WHATSAPP_ALLOW_FROM}|g" \
     && chown node:node /home/node/.openclaw/openclaw.json \
     && rm /tmp/openclaw.json
 
-EXPOSE 18789
 USER node
+
+# Install the official OTEL diagnostics plugin so the gateway can export traces,
+# metrics, and logs to the shared in-cluster Alloy receiver.
+RUN openclaw plugins install clawhub:@openclaw/diagnostics-otel
+
+EXPOSE 18789
