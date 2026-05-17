@@ -24,6 +24,6 @@ USER node
 
 # Install the official OTEL diagnostics plugin so the gateway can export traces,
 # metrics, and logs to the shared in-cluster Alloy receiver.
-RUN openclaw plugins install clawhub:@openclaw/diagnostics-otel
+RUN openclaw plugins install @openclaw/diagnostics-otel
 
 EXPOSE 18789
