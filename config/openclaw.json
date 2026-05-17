@@ -1,7 +1,14 @@
 {
   "gateway": {
+    "mode": "local",
     "port": 18789,
     "bind": "lan",
+    "controlUi": {
+      "allowedOrigins": [
+        "http://localhost:18789",
+        "http://127.0.0.1:18789"
+      ]
+    },
     "auth": {
       "rateLimit": {
         "maxAttempts": 10,
@@ -11,12 +18,22 @@
     }
   },
   "plugins": {
-    "allow": ["diagnostics-otel"],
+    "allow": ["anthropic", "diagnostics-otel", "ollama", "whatsapp"],
     "entries": {
+      "anthropic": {
+        "enabled": true
+      },
       "diagnostics-otel": {
         "enabled": true
+      },
+      "ollama": {
+        "enabled": true
+      },
+      "whatsapp": {
+        "enabled": true
       }
-    }
+    },
+    "bundledDiscovery": "allowlist"
   },
   "diagnostics": {
     "enabled": true,
@@ -60,6 +77,11 @@
       "allowFrom": "{{WHATSAPP_ALLOW_FROM}}",
       "groupPolicy": "allowlist",
       "groupAllowFrom": "{{WHATSAPP_GROUP_ALLOW_FROM}}"
+    }
+  },
+  "messages": {
+    "groupChat": {
+      "visibleReplies": "message_tool"
     }
   }
 }

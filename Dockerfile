@@ -22,8 +22,8 @@ RUN sed -e "s|\"{{WHATSAPP_ALLOW_FROM}}\"|${WHATSAPP_ALLOW_FROM}|g" \
 
 USER node
 
-# Install the official OTEL diagnostics plugin so the gateway can export traces,
-# metrics, and logs to the shared in-cluster Alloy receiver.
-RUN openclaw plugins install @openclaw/diagnostics-otel
+# Install the official WhatsApp plugin explicitly. In OpenClaw 2026.5.x the
+# WhatsApp dependency cone is no longer part of the lean core runtime image.
+RUN openclaw plugins install clawhub:@openclaw/whatsapp
 
 EXPOSE 18789
