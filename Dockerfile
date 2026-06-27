@@ -24,6 +24,8 @@ USER node
 
 # Install the official WhatsApp plugin explicitly. In OpenClaw 2026.5.x the
 # WhatsApp dependency cone is no longer part of the lean core runtime image.
-RUN openclaw plugins install clawhub:@openclaw/whatsapp
+# Pin the plugin to the runtime family so clawhub/npm latest cannot drift past
+# the pinned OpenClaw plugin API exposed by the base image.
+RUN openclaw plugins install @openclaw/whatsapp@2026.5.22
 
 EXPOSE 18789

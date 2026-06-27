@@ -20,10 +20,10 @@ FROM ghcr.io/openclaw/openclaw:2026.5.22@sha256:dcfd148777401d1bbdc63eab5c2f280b
 The image build installs the external WhatsApp plugin with:
 
 ```dockerfile
-RUN openclaw plugins install clawhub:@openclaw/whatsapp
+RUN openclaw plugins install @openclaw/whatsapp@2026.5.22
 ```
 
-That plugin reference is not version-pinned. A future `clawhub` release can become incompatible with the pinned OpenClaw runtime even when the Dockerfile has not changed.
+That plugin reference is version-pinned to match the pinned OpenClaw runtime family.
 
 ## Compatibility History
 
@@ -34,6 +34,7 @@ That plugin reference is not version-pinned. A future `clawhub` release can beco
 | 2026-05-17 | `73cd74b` | Upgraded OpenClaw to `2026.5.12` by digest | Compatibility upgrade for newer OpenClaw behavior |
 | 2026-05-17 | `8246300` | Replaced diagnostics plugin install with `clawhub:@openclaw/whatsapp` | OpenClaw `2026.5.x` no longer carried WhatsApp in the lean runtime image |
 | 2026-05-26 | `9ce5892` | Bumped OpenClaw to `2026.5.22` by digest | Follow-up runtime bump for WhatsApp plugin compatibility |
+| 2026-06-27 | PR #33 | Pinned WhatsApp plugin to `@openclaw/whatsapp@2026.5.22` | Prevents mutable `clawhub` latest from selecting a plugin requiring a newer OpenClaw plugin API |
 
 ## Important Correction
 
@@ -56,11 +57,15 @@ Meaning:
 - The unpinned WhatsApp plugin resolver selected a newer plugin requiring OpenClaw plugin API `>=2026.6.10`.
 - This is a mutable dependency failure, not evidence that the docs-only PR changed the image.
 
-Preferred fixes, in order:
+Applied fix:
 
-1. Pin `@openclaw/whatsapp` to a version compatible with OpenClaw `2026.5.22`, if the plugin registry supports immutable version selection.
-2. Upgrade the OpenClaw base image to a runtime exposing plugin API `>=2026.6.10`, then rebuild and promote the resulting image digest through GitOps.
-3. If neither option is immediately available, keep the failure recorded here and avoid treating unrelated docs PRs as image validation evidence.
+- Pin the plugin install to `@openclaw/whatsapp@2026.5.22`, which declares `openclaw >=2026.5.22` and `pluginApi >=2026.5.22`.
+
+Future fixes, if a newer plugin is required:
+
+1. Upgrade the OpenClaw base image to a runtime exposing the required plugin API.
+2. Pin the WhatsApp plugin to the same compatible version family.
+3. Rebuild and promote the resulting image digest through GitOps.
 
 ## Operational Rule
 
