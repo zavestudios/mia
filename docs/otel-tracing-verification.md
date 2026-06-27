@@ -1,6 +1,6 @@
 # OTEL Tracing Verification
 
-Purpose: verify that Mia emits OpenTelemetry signals through the shared Alloy receiver and that traces are visible in Tempo/Grafana.
+Purpose: verify that Mia emits OpenTelemetry traces through the shared Alloy receiver and that those traces are visible in Tempo/Grafana.
 
 This is the focused closure path for `zavestudios/mia#30`.
 
@@ -99,5 +99,5 @@ Record these in the issue comment when closing `zavestudios/mia#30`:
 - timestamp and timezone for the generated request
 - `OTEL_SERVICE_NAME` observed in the running deployment
 - Grafana/Tempo query used
-- whether traces, metrics, and logs appeared as expected
+- whether traces appeared as expected
 - any remaining gap between Mia's declared tracing capability and the operator workflow

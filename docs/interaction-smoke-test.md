@@ -8,6 +8,7 @@ Purpose: provide one repeatable operator check after deploys.
 - Validate dashboard access path.
 - Validate runtime stability signals.
 - For OTEL trace validation, use [otel-tracing-verification.md](otel-tracing-verification.md).
+- For OpenClaw runtime and plugin compatibility history, use [runtime-dependency-record.md](runtime-dependency-record.md).
 
 ## Procedure
 
