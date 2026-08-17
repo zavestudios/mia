@@ -1,18 +1,15 @@
 apiVersion: zave.io/v1
 kind: Workload
 metadata:
-  name: mia
+  name: autonomous-agent
 
 spec:
   runtime: container
-  exposure: public-http
+  exposure: internal-http
   delivery: rolling
 
   build:
     mode: dockerfile
-
-  persistence:
-    engine: postgres
 
   capabilities:
     - name: tracing

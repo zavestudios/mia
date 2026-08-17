@@ -50,7 +50,7 @@ htmlcov/
 # Docker
 docker-compose.override.yml
 
-# Agent configurations (local development only, not required in tenant repos)
+# Agent configurations (local development only, not required in this repo)
 AGENTS.md
 CLAUDE.md
 strict-audit

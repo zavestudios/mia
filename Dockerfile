@@ -1,31 +1,16 @@
-# Mia - OpenClaw AI Gateway
-# Use the official OpenClaw runtime image and layer workload defaults.
+# Autonomous Agent - OpenClaw runtime
+# Use the official OpenClaw runtime image and layer platform-service defaults.
 FROM ghcr.io/openclaw/openclaw:2026.5.22@sha256:dcfd148777401d1bbdc63eab5c2f280bbfa912dfb1818566f9d66bb96ffb3f95
 ENV HOME=/home/node
-
-# Accept phone numbers as build arguments (default to empty arrays for local dev)
-ARG WHATSAPP_ALLOW_FROM='[]'
-ARG WHATSAPP_GROUP_ALLOW_FROM='[]'
 
 USER root
 RUN mkdir -p /home/node/.openclaw \
     && chown -R node:node /home/node/.openclaw \
     && chmod 700 /home/node/.openclaw
 
-# Copy config with placeholder tokens, substitute with build args, install to final location
-COPY config/openclaw.json /tmp/openclaw.json
-RUN sed -e "s|\"{{WHATSAPP_ALLOW_FROM}}\"|${WHATSAPP_ALLOW_FROM}|g" \
-        -e "s|\"{{WHATSAPP_GROUP_ALLOW_FROM}}\"|${WHATSAPP_GROUP_ALLOW_FROM}|g" \
-        /tmp/openclaw.json > /home/node/.openclaw/openclaw.json \
-    && chown node:node /home/node/.openclaw/openclaw.json \
-    && rm /tmp/openclaw.json
+COPY config/openclaw.json /home/node/.openclaw/openclaw.json
+RUN chown node:node /home/node/.openclaw/openclaw.json
 
 USER node
-
-# Install the official WhatsApp plugin explicitly. In OpenClaw 2026.5.x the
-# WhatsApp dependency cone is no longer part of the lean core runtime image.
-# Pin the plugin to the runtime family so clawhub/npm latest cannot drift past
-# the pinned OpenClaw plugin API exposed by the base image.
-RUN openclaw plugins install @openclaw/whatsapp@2026.5.22
 
 EXPOSE 18789
