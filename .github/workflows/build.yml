@@ -8,23 +8,16 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-and-dispatch:
+  build:
     permissions:
       contents: read
       packages: write
       id-token: write
-    uses: zavestudios/platform-pipelines/.github/workflows/container-build-dispatch.yml@main
+    uses: zavestudios/platform-pipelines/.github/workflows/container-build.yml@main
     with:
-      image_name: zavestudios/mia
+      image_name: zavestudios/autonomous-agent
       dockerfile: Dockerfile
       push: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
       platforms: linux/amd64,linux/arm64
-      dispatch_repository: zavestudios/gitops
-      dispatch_event_type: mia-image-published
-      fail_severity: ""  # TEMPORARY: Bypass Trivy gate for sandbox WhatsApp persistence testing (tracked in Issue #6)
     secrets:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      GITOPS_REPO_DISPATCH_TOKEN: ${{ secrets.GITOPS_REPO_DISPATCH_TOKEN }}
-      BUILD_ARG_SECRETS: |
-        WHATSAPP_ALLOW_FROM=${{ secrets.WHATSAPP_ALLOW_FROM }}
-        WHATSAPP_GROUP_ALLOW_FROM=${{ secrets.WHATSAPP_GROUP_ALLOW_FROM }}

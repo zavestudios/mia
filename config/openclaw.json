@@ -18,7 +18,7 @@
     }
   },
   "plugins": {
-    "allow": ["anthropic", "diagnostics-otel", "ollama", "whatsapp"],
+    "allow": ["anthropic", "diagnostics-otel", "ollama"],
     "entries": {
       "anthropic": {
         "enabled": true
@@ -27,9 +27,6 @@
         "enabled": true
       },
       "ollama": {
-        "enabled": true
-      },
-      "whatsapp": {
         "enabled": true
       }
     },
@@ -63,25 +60,11 @@
         "model": "ollama/llama3.2:3b",
         "session": "main",
         "target": "none",
-        "prompt": "Review the active roadmap and progress tracker. Ask for any completed items, slipped commitments, blockers, or priority changes. Keep the check-in short and action-oriented."
+        "prompt": "Review active goals, standing instructions, and pending workflow state. Identify stale commitments, blockers, or situations that require Billy's attention. Keep the check-in short and action-oriented."
       }
     }
   },
   "session": {
     "dmScope": "per-channel-peer"
-  },
-  "channels": {
-    "whatsapp": {
-      "enabled": true,
-      "dmPolicy": "pairing",
-      "allowFrom": "{{WHATSAPP_ALLOW_FROM}}",
-      "groupPolicy": "allowlist",
-      "groupAllowFrom": "{{WHATSAPP_GROUP_ALLOW_FROM}}"
-    }
-  },
-  "messages": {
-    "groupChat": {
-      "visibleReplies": "message_tool"
-    }
   }
 }
